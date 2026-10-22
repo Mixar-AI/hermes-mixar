@@ -47,7 +47,9 @@ Each time the user says they are done, call `mixar_status` again and say what it
 
 ## Credits
 
-Only generation costs Mixar credits (each job's price, and `create_layered_material`); every other tool is free. Before a paid call, `mixar_tool_quote(tool=...)` gives the current price and `mixar_credit_balance` the user's balance. Ask before a large credit spend.
+Only generation costs Mixar credits (each job's price, and `create_layered_material`); every other tool is free. `mixar_credit_balance` gives the user's balance. `mixar_tool_quote(tool=...)` gives a direct tool's price; for `enqueue_generation` it answers `existing_job_queue`, because a queued job is billed at its model's job price. Ask before a large credit spend.
+
+`enqueue_generation` answers `dispatched: true` even when the account cannot pay. The job then shows as failed in `get_all_queue_status` or `poll_generation`, with an error such as "This generation uses credits — get a subscription to continue". Tell the user that, and do not queue the job again.
 
 ## Interface control
 

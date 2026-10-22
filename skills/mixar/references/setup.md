@@ -13,7 +13,7 @@ Download Mixar 4.2.1 or newer from https://www.mixar.app and move it to `/Applic
 3. The status line should read "MCP is on · AI apps can connect to this Mixar". If it says MCP is off, click **Turn on**.
 4. Optional: switch on **Let AI apps control Mixar's interface** to allow the `mixar_ui_*` tools.
 
-Turning MCP on writes the launcher this package starts, `~/.mixar/connector/mixar-mcp`. If that file is missing after these steps, quit and reopen Mixar.
+Mixar writes the launcher this package starts, `~/.mixar/connector/mixar-mcp`, while it runs; with MCP off the launcher only answers that MCP is turned off. If that file is missing after these steps, quit and reopen Mixar.
 
 ## 3. Reload MCP in Hermes
 

@@ -1,0 +1,28 @@
+# Setting up Mixar for Hermes
+
+Installation, MCP availability and scene readiness are separate states. Check each in order.
+
+## 1. Install Mixar
+
+Download Mixar 4.2.1 or newer from https://www.mixar.app and move it to `/Applications` or `~/Applications`. Hermes refuses this package when it cannot find `Mixar.app` there, or when the installed version is older than 4.2.1. Mixar updates itself; the plugin never downloads or updates Mixar.
+
+## 2. Sign in and turn on MCP
+
+1. Open Mixar and sign in from the profile menu.
+2. Open the profile menu > **Connect MCP**.
+3. The status line should read "MCP is on · AI apps can connect to this Mixar". If it says MCP is off, click **Turn on**.
+4. Optional: switch on **Let AI apps control Mixar's interface** to allow the `mixar_ui_*` tools.
+
+Turning MCP on writes the launcher this package starts, `~/.mixar/connector/mixar-mcp`. If that file is missing after these steps, quit and reopen Mixar.
+
+## 3. Reload MCP in Hermes
+
+Run `/reload-mcp` in the Hermes session, or start a new session. Then call `mixar_status`: an answer naming the desktop and the scene means Mixar is ready.
+
+## Development and QA builds
+
+`MIXAR_MCP_LAUNCHER` points the package at another launcher (for example a source build's), and `MIXAR_MCP_DISCOVERY_DIR` at another discovery folder. Set them in the shell or in the Hermes profile's `.env`; when unset, the defaults apply.
+
+## Platforms
+
+This package supports macOS. On Windows, Mixar's launcher is `mixar-mcp.cmd`, which a portable package's single `mcp.json` command cannot start; until Hermes supports a per-OS command, add Mixar by hand under `mcp_servers` in `~/.hermes/config.yaml` with `command: cmd.exe` and `args: ["/d", "/c", "<home>\\.mixar\\connector\\mixar-mcp.cmd"]` and `timeout: 610`.

@@ -23,7 +23,7 @@ hermes plugins install Mixar-AI/hermes-mixar --no-enable
 hermes plugins enable mixar
 ```
 
-Then in Mixar: sign in, open the profile menu > **Connect MCP**, and check that the status line reads "MCP is on". Run `/reload-mcp` in Hermes (or start a new session) and ask it to check Mixar's status.
+Then in Mixar: sign in, open the profile menu > **Connect MCP**, and check that the status line reads "MCP is on". Run `/reload-mcp` in Hermes (or start a new session) and ask it to check Mixar's status. If no Mixar tools appear, `~/.hermes/logs/mcp-stderr.log` says why.
 
 The tools appear under the `mixar` server, for example `mcp__mixar__scene_overview` and `mcp__mixar__execute_bpy_script`. `skills/mixar/references/setup.md` covers first-run setup and troubleshooting.
 

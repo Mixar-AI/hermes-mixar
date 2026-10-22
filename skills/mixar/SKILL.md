@@ -9,14 +9,15 @@ Mixar is an AI-native 3D editor built on Blender 5.2. This package starts the MC
 
 ## First run on a new computer
 
-Check softly before anything else. Call `mixar_status`. A desktop and scene in its answer means Mixar is ready. Any of these replies means the Mixar side is not ready yet; walk the user through setup instead of retrying:
+Check softly before anything else. Call `mixar_status`; if it is not listed, call `mixar_ui_context` instead (until Mixar has connected once on this computer, only its local tools are listed). A desktop and scene in the answer means Mixar is ready. Any of these replies means the Mixar side is not ready yet; walk the user through setup instead of retrying:
 
 - "Sign in to Mixar before using its tools": the user signs in from Mixar's profile menu.
 - "MCP is turned off in Mixar": profile menu > **Connect MCP** > **Turn on**.
-- "Mixar is not open, and no installed Mixar could be started" or "Mixar is starting or unavailable": the user opens Mixar and waits for it to finish loading.
+- "Mixar is starting or unavailable": a tool call may just have opened Mixar, which takes up to a minute to load. Wait about 20 seconds and call `mixar_status` again; if it still says so after a minute, ask the user to open Mixar.
+- "Mixar is not open, and no installed Mixar could be started": the user opens Mixar and waits for it to finish loading.
 - "Mixar is connecting to its server": wait a moment and call `mixar_status` again.
 - "Several Mixar applications are open": ask which one to use, or ask the user to close the others.
-- The server does not start at all and Hermes reports that Mixar's launcher was not found: follow `references/setup.md`.
+- No Mixar tools are listed at all: the launcher did not start. Hermes reports "Connection closed" for the `mixar` server and logs the reason in `logs/mcp-stderr.log` under the Hermes home (for example that Mixar's launcher was not found). Follow `references/setup.md`.
 
 Each time the user says they are done, call `mixar_status` again and say what it shows. Never install Mixar, change its preferences or sign in for the user.
 

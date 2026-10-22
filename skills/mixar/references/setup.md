@@ -17,7 +17,9 @@ Mixar writes the launcher this package starts, `~/.mixar/connector/mixar-mcp`, w
 
 ## 3. Reload MCP in Hermes
 
-Run `/reload-mcp` in the Hermes session, or start a new session. Then call `mixar_status`: an answer naming the desktop and the scene means Mixar is ready.
+Run `/reload-mcp` in the Hermes session, or start a new session. Then call `mixar_status` (or `mixar_ui_context` when `mixar_status` is not listed yet): an answer naming the desktop and the scene means Mixar is ready.
+
+If no Mixar tools appear at all, the launcher did not start. Hermes shows "Connection closed" for the `mixar` server, and `~/.hermes/logs/mcp-stderr.log` holds the launcher's own message, such as the path where it looked for Mixar's launcher.
 
 ## Development and QA builds
 

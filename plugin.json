@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mixar",
+  "version": "0.1.0",
+  "description": "Connect Hermes to the Mixar desktop app's MCP server and load a Mixar workflow skill: build and edit 3D scenes, generate models, textures, rigs and animation with AI, render and export. Mixar 4.2.1+ must be installed (the install is refused without it) and signed in with MCP turned on.",
+  "author": {
+    "name": "Mixar",
+    "url": "https://www.mixar.app"
+  },
+  "homepage": "https://www.mixar.app",
+  "repository": "https://github.com/Mixar-AI/hermes-mixar",
+  "license": "MIT",
+  "keywords": [
+    "mixar",
+    "mcp",
+    "3d",
+    "game-dev",
+    "blender",
+    "local"
+  ],
+  "extensions": {
+    "com.nousresearch.hermes": {
+      "servers": {
+        "mixar": {
+          "app": {
+            "darwin": {
+              "presence": "bundle",
+              "location": [
+                {
+                  "kind": "app_bundle",
+                  "name": "Mixar.app"
+                }
+              ],
+              "version": {
+                "kind": "plist"
+              }
+            }
+          },
+          "requires": {
+            "app": true,
+            "min_version": "4.2.1"
+          },
+          "timeout": 610
+        }
+      }
+    }
+  }
+}

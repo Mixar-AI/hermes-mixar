@@ -13,13 +13,17 @@ Check softly before anything else. Call `mixar_status`; if it is not listed, cal
 
 - "Sign in to Mixar before using its tools": the user signs in from Mixar's profile menu.
 - "MCP is turned off in Mixar": profile menu > **Connect MCP** > **Turn on**.
-- "Mixar is starting or unavailable": a tool call may just have opened Mixar, which takes up to a minute to load. Wait about 20 seconds and call `mixar_status` again; if it still says so after a minute, ask the user to open Mixar.
+- "Mixar is starting or unavailable" on the first call of a session: that call may just have opened Mixar, which takes up to a minute to load. Wait about 30 seconds and call `mixar_status` again; if it still says so, ask the user to open Mixar.
+- "Mixar is starting or unavailable" after Mixar was working earlier in this session: Mixar quit, and this connection will not reopen it. Ask the user to open Mixar.
+- "The Mixar app this connection used was closed…": Mixar was reopened and the reply names the running instance. Call `mixar_ui_context` with that instance, then `mixar_scenes` to pick a tab (or `mixar_scene_new`), and inspect the scene before editing: an unsaved scene from before is gone.
 - "Mixar is not open, and no installed Mixar could be started": the user opens Mixar and waits for it to finish loading.
 - "Mixar is connecting to its server": wait a moment and call `mixar_status` again.
 - "Several Mixar applications are open": ask which one to use, or ask the user to close the others.
 - No Mixar tools are listed at all: the launcher did not start. Hermes reports "Connection closed" for the `mixar` server and logs the reason in `logs/mcp-stderr.log` under the Hermes home (for example that Mixar's launcher was not found). Follow `references/setup.md`.
 
 Each time the user says they are done, call `mixar_status` again and say what it shows. Never install Mixar, change its preferences or sign in for the user.
+
+Hermes pauses the whole Mixar server for about a minute after three failed Mixar calls in a row, from any Mixar tool; a script error counts. Never retry more than twice in a row. After two failures, make a call you expect to succeed (such as `scene_overview`) before trying again, or wait for the user. If Hermes says the server is paused, wait the seconds it names before the next Mixar call.
 
 ## Before working
 

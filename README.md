@@ -11,7 +11,8 @@ The plugin is a portable Agent Plugin package:
 ## Requirements
 
 - macOS with Mixar 4.2.1 or newer in `/Applications` or `~/Applications`. Hermes refuses the install when it cannot find it.
-- A Mixar account, signed in in the app, with **Connect MCP** turned on.
+- A Mixar account, signed in in the app, with **Connect MCP** turned on. Both are done once in Mixar's interface.
+- Hermes running on the same Mac as Mixar. The launcher only reaches the Mixar app on its own computer, so a Hermes on a remote server or in a container cannot use this plugin.
 - Hermes Agent with portable package support.
 
 Hermes supplies the model. You do not need a Mixar API key, a personal access token or a separate Python environment: the launcher runs on Mixar's embedded Python.

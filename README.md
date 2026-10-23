@@ -4,15 +4,15 @@ Connect [Hermes Agent](https://github.com/NousResearch/hermes-agent) to [Mixar](
 
 The plugin is a portable Agent Plugin package:
 
-- `mcp.json` starts the MCP server that Mixar installs for the signed-in user, through `bin/mixar-mcp`.
+- `mcp.json` starts the MCP server that Mixar installs for the signed-in user, through `bin/mixar-mcp` (`bin/mixar-mcp.cmd` on Windows).
 - `skills/mixar` teaches Hermes the Mixar workflow: check readiness, read the scene, build in small steps, verify with a render, and deliver.
 - `plugin.json` tells Hermes to offer the server only when Mixar 4.2.1 or newer is installed, and gives scene calls a 610-second tool-call timeout.
 
 ## Requirements
 
-- macOS with Mixar 4.2.1 or newer in `/Applications` or `~/Applications`. Hermes refuses the install when it cannot find it.
+- Mixar 4.2.1 or newer on macOS, Windows or Linux. Hermes refuses the install when it cannot find it (see [Platforms](#platforms) for where it looks).
 - A Mixar account, signed in in the app, with **Connect MCP** turned on. Both are done once in Mixar's interface.
-- Hermes running on the same Mac as Mixar. The launcher only reaches the Mixar app on its own computer, so a Hermes on a remote server or in a container cannot use this plugin.
+- Hermes running on the same computer as Mixar. The launcher only reaches the Mixar app on its own computer, so a Hermes on a remote server or in a container cannot use this plugin.
 - Hermes Agent with portable package support.
 
 Hermes supplies the model. You do not need a Mixar API key, a personal access token or a separate Python environment: the launcher runs on Mixar's embedded Python.
@@ -47,7 +47,7 @@ The live list comes from the running Mixar and can grow between releases.
 
 Read this before installing.
 
-- **Runs code from the installed Mixar app.** `bin/mixar-mcp` executes `~/.mixar/connector/mixar-mcp`, a launcher the Mixar desktop app writes for the current user, which runs Mixar's bundled `mcp.py` on Mixar's embedded Python. The plugin ships no binary and downloads nothing.
+- **Runs code from the installed Mixar app.** `bin/mixar-mcp` executes `~/.mixar/connector/mixar-mcp` (on Windows, `bin/mixar-mcp.cmd` runs `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd`), a launcher the Mixar desktop app writes for the current user, which runs Mixar's bundled `mcp.py` on Mixar's embedded Python. The plugin ships no binary and downloads nothing.
 - **Arbitrary Python inside Mixar.** `execute_bpy_script` and other scene tools run Python in the Mixar process with your privileges. A loopback connection is not a sandbox.
 - **Can start Mixar.** A tool call made while Mixar is closed may open the installed Mixar app. Listing tools never does.
 - **Network calls through Mixar.** The launcher talks to the desktop app over loopback with a per-launch bearer token. The desktop app forwards calls to Mixar's backend (`api.mixar.app`) under your signed-in account.
@@ -59,15 +59,13 @@ Read this before installing.
 
 ## Platforms
 
-macOS only for now. On Windows, Mixar's launcher is `mixar-mcp.cmd`, which a portable package's single `mcp.json` command cannot start. Until Hermes supports a per-OS command, add Mixar by hand to `~/.hermes/config.yaml`:
+| Platform | Where Hermes looks for Mixar | Version check | Launcher the plugin starts |
+|----------|------------------------------|---------------|----------------------------|
+| macOS | `Mixar.app` in `/Applications` or `~/Applications` | the app's `Info.plist` | `~/.mixar/connector/mixar-mcp` |
+| Windows | the Mixar entry in installed apps (`mixar.exe` in its install folder), or `%ProgramFiles%\Mixar\mixar.exe` | the installed-apps entry | `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd` |
+| Linux | a `mixar` command on `PATH`, or the launcher Mixar writes on first run | none (presence only) | `~/.mixar/connector/mixar-mcp` |
 
-```yaml
-mcp_servers:
-  mixar:
-    command: "cmd.exe"
-    args: ["/d", "/c", "C:\\Users\\<you>\\.mixar\\connector\\mixar-mcp.cmd"]
-    timeout: 610
-```
+`mcp.json` holds one command, `./bin/mixar-mcp`. On macOS and Linux it is the POSIX shell script; on Windows the MCP SDK Hermes uses resolves the same command through `PATHEXT` to `bin/mixar-mcp.cmd`. Mixar for Linux is a portable archive with no fixed install folder, so open Mixar once before installing the plugin, or put its `mixar` executable on your `PATH`.
 
 ## Development
 
@@ -75,6 +73,8 @@ mcp_servers:
 hermes plugins validate /path/to/hermes-mixar --install-deps
 hermes plugins doctor /path/to/hermes-mixar
 ```
+
+The **Launcher shim** workflow (`.github/workflows/launcher-shim.yml`) starts `bin/mixar-mcp` the way Hermes does against a stub Mixar launcher on macOS, Windows and Ubuntu runners.
 
 Two optional variables point the package at a development or QA build of Mixar. Set them in your shell or the Hermes profile's `.env`:
 

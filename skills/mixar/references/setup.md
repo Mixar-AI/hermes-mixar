@@ -4,7 +4,13 @@ Installation, MCP availability and scene readiness are separate states. Check ea
 
 ## 1. Install Mixar
 
-Download Mixar 4.2.1 or newer from https://www.mixar.app and move it to `/Applications` or `~/Applications`. Hermes refuses this package when it cannot find `Mixar.app` there, or when the installed version is older than 4.2.1. Mixar updates itself; the plugin never downloads or updates Mixar.
+Download Mixar 4.2.1 or newer from https://www.mixar.app. Hermes refuses this package when it cannot find Mixar, or when the installed version is older than 4.2.1:
+
+- macOS: move `Mixar.app` to `/Applications` or `~/Applications`.
+- Windows: run the installer; Hermes finds Mixar through its installed-apps entry or in `%ProgramFiles%\Mixar`.
+- Linux: Mixar is a portable archive with no fixed folder. Open Mixar once before installing the plugin (that writes the launcher Hermes checks for), or put its `mixar` executable on `PATH`. Linux has no version check.
+
+Mixar updates itself; the plugin never downloads or updates Mixar.
 
 ## 2. Sign in and turn on MCP
 
@@ -13,7 +19,7 @@ Download Mixar 4.2.1 or newer from https://www.mixar.app and move it to `/Applic
 3. The status line should read "MCP is on · AI apps can connect to this Mixar". If it says MCP is off, click **Turn on**.
 4. Optional: switch on **Let AI apps control Mixar's interface** to allow the `mixar_ui_*` tools.
 
-Mixar writes the launcher this package starts, `~/.mixar/connector/mixar-mcp`, while it runs; with MCP off the launcher only answers that MCP is turned off. If that file is missing after these steps, quit and reopen Mixar.
+Mixar writes the launcher this package starts, `~/.mixar/connector/mixar-mcp` (`%USERPROFILE%\.mixar\connector\mixar-mcp.cmd` on Windows), while it runs; with MCP off the launcher only answers that MCP is turned off. If that file is missing after these steps, quit and reopen Mixar.
 
 ## 3. Reload MCP in Hermes
 
@@ -27,4 +33,4 @@ If no Mixar tools appear at all, the launcher did not start. Hermes shows "Conne
 
 ## Platforms
 
-This package supports macOS. On Windows, Mixar's launcher is `mixar-mcp.cmd`, which a portable package's single `mcp.json` command cannot start; until Hermes supports a per-OS command, add Mixar by hand under `mcp_servers` in `~/.hermes/config.yaml` with `command: cmd.exe` and `args: ["/d", "/c", "<home>\\.mixar\\connector\\mixar-mcp.cmd"]` and `timeout: 610`.
+The package runs on macOS, Windows and Linux. Hermes must run on the same computer as Mixar: the launcher only reaches the Mixar app on its own computer.

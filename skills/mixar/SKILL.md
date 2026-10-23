@@ -39,8 +39,9 @@ Hermes pauses the whole Mixar server for about a minute after three failed Mixar
 - Choose each part's approach by judgement: a script, an existing asset or AI generation. Generation usually suits organic subjects (characters, creatures, plants); `mixar_guide("generate")` has the notes. Ask when the choice matters and the request does not settle it.
 - Before modelling props or plants, try `search_asset_library` and `list_terrain_assets`. For realistic materials use `create_layered_material`.
 - `enqueue_generation` returns at once. Call `get_generation_params(job_type)` first and pass only what it returns. Check progress later with `get_all_queue_status` or `poll_generation`, and never queue the same job again because it is still running.
-- Splat worlds (`world_labs`) and videos only when the user asked for one.
-- After an uncertain outcome, inspect the scene and call `mixar_call_status` with the same call UUID. Never blindly repeat an edit.
+- Images finish in under a minute and 3D models in a few minutes; splat worlds and videos take several minutes. Do not poll in a tight loop: between checks, do other useful work, or tell the user the job is queued and check again when they come back.
+- Splat worlds (`world_labs`) and videos only when the user asked for one. A splat world of an interior looks like a grey box from outside: to check it, put a camera inside with `place_camera` (`look_at` a wall or furniture) and call `render_viewport` with `view: "camera"` and `engine: "splat"`.
+- After an uncertain outcome, inspect the scene and call `mixar_call_status` with the same call UUID. Never blindly repeat an edit. "Mixar MCP returned HTTP 524" means the call outlived the web proxy but is usually still running on Mixar's server: `mixar_call_status` answers `pending` until it is `complete`.
 
 ## Game-ready delivery
 

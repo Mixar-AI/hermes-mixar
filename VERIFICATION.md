@@ -82,7 +82,8 @@ Run on 2026-10-22 on macOS (Apple Silicon) with Mixar 4.3.5 (`/Applications/Mixa
 | Hermes parses the `darwin`, `win32` and `linux` app blocks (`hermes_platform.declaration`) | Pass; `validate` unchanged |
 | The Linux block evaluated by Hermes's resolver on this machine | `mixar` not on PATH, launcher path found: available |
 | `.github/workflows/launcher-shim.yml` script run locally on macOS with the MCP SDK Hermes pins (2.3.0) | Pass: initialize, tools/list and tools/call through `bin/mixar-mcp` to a stub launcher in a home folder with a space; missing launcher exits 1 with an empty stdout |
-| The same workflow on `windows-latest` and `ubuntu-latest` runners | Runs on every push to `main`; asserts on Windows that the SDK resolves `./bin/mixar-mcp` to `bin/mixar-mcp.cmd` |
+| The same workflow on `macos-latest`, `windows-latest` and `ubuntu-latest` runners ([run 39890262818](https://github.com/Mixar-AI/hermes-mixar/actions/runs/39890262818), commit `a01c4cf`) | Pass on all three; on Windows the SDK resolved `./bin/mixar-mcp` to `bin\mixar-mcp.CMD` |
+| Windows with a real Mixar, installed from GitHub (checked by the maintainer on 2026-10-22) | Reported working |
 
 ## Found and fixed during testing
 
@@ -102,5 +103,5 @@ Run on 2026-10-22 on macOS (Apple Silicon) with Mixar 4.3.5 (`/Applications/Mixa
 - Model-driven Hermes sessions (`hermes -z` with the skill): no model provider was signed in on this machine.
 - A successful paid generation: the account had 0 credits.
 - Signed out, and several signed-in Mixar apps open at once.
-- Windows and Linux with a real Mixar: only the shims against a stub launcher run there (CI). The Windows installed-apps detection and version read, and a live Mixar session through Hermes on Windows or Linux, are untested.
+- Linux with a real Mixar: only the shim against a stub launcher runs there (CI); a live Mixar session through Hermes on Linux is untested.
 - The catalog's clean pinned-source admission job, which needs the repository on GitHub at the pinned commit.

@@ -51,11 +51,15 @@ Read this before installing.
 - **Arbitrary Python inside Mixar.** `execute_bpy_script` and other scene tools run Python in the Mixar process with your privileges. A loopback connection is not a sandbox.
 - **Can start Mixar.** A tool call made while Mixar is closed may open the installed Mixar app. Listing tools never does.
 - **Network calls through Mixar.** The launcher talks to the desktop app over loopback with a per-launch bearer token. The desktop app forwards calls to Mixar's backend (`api.mixar.app`) under your signed-in account.
+- **Prompts and images go to AI providers.** For a generation, Mixar's backend passes the prompt, reference images and relevant scene context to the AI provider that runs the chosen model (such as OpenAI, Anthropic, Google, fal.ai, Replicate or Tripo). Mixar does not use them to train AI models.
+- **Diagnostic records.** Mixar's backend records each MCP tool call (its inputs, including prompts, and its results) for troubleshooting and service improvement. It deletes these records within 30 days of collection and their backup copies within 7 days. This is separate from **Share Usage Data**.
 - **Spends Mixar credits.** AI generation jobs and `create_layered_material` cost Mixar credits from your account; every other tool is free. `mixar_tool_quote` gives the current price before a call.
 - **No stored credentials.** The plugin and the launcher never hold your Mixar token; the desktop app attaches its own login to each call.
 - **Reads outside the plugin.** The launcher reads `~/.mixar/` (its manifest, the saved tool list and the discovery records of running Mixar apps).
-- **No telemetry** from the plugin. Mixar's own usage data follows the app's **Share Usage Data** setting.
+- **Usage data.** The plugin sends none. Mixar's own desktop usage analytics are on by default, exclude prompts, file names and scene content, and can be turned off under **Edit → Preferences → System → Privacy → Share Usage Data**.
 - **No self-update.** Updates arrive only as a new pinned commit in the Hermes plugin catalog. Mixar itself updates through its own updater, outside this plugin.
+
+Full details are in the [Mixar Privacy Policy](https://www.mixar.app/legal/privacy-policy).
 
 ## Platforms
 

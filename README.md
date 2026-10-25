@@ -50,6 +50,7 @@ Read this before installing.
 - **Runs code from the installed Mixar app.** `bin/mixar-mcp` executes `~/.mixar/connector/mixar-mcp` (on Windows, `bin/mixar-mcp.cmd` runs `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd`), a launcher the Mixar desktop app writes for the current user, which runs Mixar's bundled `mcp.py` on Mixar's embedded Python. The plugin ships no binary and downloads nothing.
 - **Arbitrary Python inside Mixar.** `execute_bpy_script` and other scene tools run Python in the Mixar process with your privileges. A loopback connection is not a sandbox.
 - **Can start Mixar.** A tool call made while Mixar is closed may open the installed Mixar app. Listing tools never does.
+- **Mixar stays open.** If a tool call opened Mixar, it keeps running after Hermes exits; quit it like any other app.
 - **Network calls through Mixar.** The launcher talks to the desktop app over loopback with a per-launch bearer token. The desktop app forwards calls to Mixar's backend (`api.mixar.app`) under your signed-in account.
 - **Prompts and images go to AI providers.** For a generation, Mixar's backend passes the prompt, reference images and relevant scene context to the AI provider that runs the chosen model (such as OpenAI, Anthropic, Google, fal.ai, Replicate or Tripo). Mixar does not use them to train AI models.
 - **Diagnostic records.** Mixar's backend records each MCP tool call (its inputs, including prompts, and its results) for troubleshooting and service improvement. It deletes these records within 30 days of collection and their backup copies within 7 days. This is separate from **Share Usage Data**.
@@ -57,6 +58,7 @@ Read this before installing.
 - **No stored credentials.** The plugin and the launcher never hold your Mixar token; the desktop app attaches its own login to each call.
 - **Reads outside the plugin.** The launcher reads `~/.mixar/` (its manifest, the saved tool list and the discovery records of running Mixar apps).
 - **Usage data.** The plugin sends none. Mixar's own desktop usage analytics are on by default, exclude prompts, file names and scene content, and can be turned off under **Edit → Preferences → System → Privacy → Share Usage Data**.
+- **Developer override.** If `MIXAR_MCP_LAUNCHER` is set (in your shell or the Hermes `.env`), the plugin runs the program it names instead of Mixar's launcher. Leave it unset unless you are testing a Mixar build.
 - **No self-update.** Updates arrive only as a new pinned commit in the Hermes plugin catalog. Mixar itself updates through its own updater, outside this plugin.
 
 Full details are in the [Mixar Privacy Policy](https://www.mixar.app/legal/privacy-policy).

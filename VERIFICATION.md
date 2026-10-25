@@ -10,7 +10,7 @@ Run on 2026-10-22 on macOS (Apple Silicon) with Mixar 4.3.5 (`/Applications/Mixa
 |---|---|
 | `hermes plugins validate <repo> --install-deps` | Passed: manifest, config schema, server availability (`available, version 4.3.5`), security scan `safe`, "portable plugin (no Python)" |
 | `hermes plugins doctor <repo>` | Passed |
-| `scripts/validate_plugin_catalog.py` on `docs/catalog-entry.yaml` | `OK: 1 file(s) valid` |
+| `scripts/validate_plugin_catalog.py` on the catalog entry (`plugin-catalog/mixar.yaml` in the catalog PR) | `OK: 1 file(s) valid` |
 | `scripts/scan_plugin_payloads.py <repo>` | Passed |
 | Catalog CI on Linux | `validate` reports availability as informational, so a platform the runner lacks does not fail it |
 

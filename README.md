@@ -19,9 +19,16 @@ Hermes supplies the model. You do not need a Mixar API key, a personal access to
 
 ## Install
 
+From the Hermes plugin catalog:
+
 ```bash
-hermes plugins install Mixar-AI/hermes-mixar --no-enable
-hermes plugins enable mixar
+hermes plugins install mixar
+```
+
+Or straight from GitHub:
+
+```bash
+hermes plugins install Mixar-AI/hermes-mixar --enable
 ```
 
 Then in Mixar: sign in, open the profile menu > **Connect MCP**, and check that the status line reads "MCP is on". Run `/reload-mcp` in Hermes (or start a new session) and ask it to check Mixar's status. If no Mixar tools appear, `~/.hermes/logs/mcp-stderr.log` says why.

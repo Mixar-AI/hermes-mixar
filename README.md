@@ -13,7 +13,7 @@ The plugin is a portable Agent Plugin package:
 - Mixar 4.2.1 or newer on macOS, Windows or Linux. Hermes refuses the install when it cannot find it (see [Platforms](#platforms) for where it looks).
 - A Mixar account, signed in in the app, with **Connect MCP** turned on. Both are done once in Mixar's interface.
 - Hermes running on the same computer as Mixar. The launcher only reaches the Mixar app on its own computer, so a Hermes on a remote server or in a container cannot use this plugin.
-- Hermes Agent with portable package support.
+- Hermes Agent v0.22.3 or newer.
 
 Hermes supplies the model. You do not need a Mixar API key, a personal access token or a separate Python environment: the launcher runs on Mixar's embedded Python.
 
@@ -61,7 +61,7 @@ Read this before installing.
 - **Network calls through Mixar.** The launcher talks to the desktop app over loopback with a per-launch bearer token. The desktop app forwards calls to Mixar's backend (`api.mixar.app`) under your signed-in account.
 - **Prompts and images go to AI providers.** For a generation, Mixar's backend passes the prompt, reference images and relevant scene context to the AI provider that runs the chosen model (such as OpenAI, Anthropic, Google, fal.ai, Replicate or Tripo). Mixar does not use them to train AI models.
 - **Diagnostic records.** Mixar's backend records each MCP tool call (its inputs, including prompts, and its results) for troubleshooting and service improvement. It deletes these records within 30 days of collection and their backup copies within 7 days. This is separate from **Share Usage Data**.
-- **Spends Mixar credits.** AI generation jobs and `create_layered_material` cost Mixar credits from your account; every other tool is free. `mixar_tool_quote` gives the current price before a call.
+- **Spends Mixar credits.** AI generation jobs and `create_layered_material` cost Mixar credits from your account; every other tool is free. `mixar_tool_quote` gives the current price before a call. The plugin declares these credit ranges to Hermes, which names the cost in its approval prompts and asks for an explicit yes before a chat passes 500 Mixar credits (it counts each call at the top of its range).
 - **No stored credentials.** The plugin and the launcher never hold your Mixar token; the desktop app attaches its own login to each call.
 - **Reads outside the plugin.** The launcher reads `~/.mixar/` (its manifest, the saved tool list and the discovery records of running Mixar apps).
 - **Usage data.** The plugin sends none. Mixar's own desktop usage analytics are on by default, exclude prompts, file names and scene content, and can be turned off under **Edit → Preferences → System → Privacy → Share Usage Data**.

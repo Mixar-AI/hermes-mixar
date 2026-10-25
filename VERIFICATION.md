@@ -75,6 +75,14 @@ Run on 2026-10-22 on macOS (Apple Silicon) with Mixar 4.3.5 (`/Applications/Mixa
 | Tool-call timeout | A 330-second call answered through the package (610 s); the same call through a server on Hermes's default timed out at 300 s |
 | Tool names in `SKILL.md`, `references/setup.md`, `README.md` | All exist in the live list |
 
+### Credit costs and the spend limit
+
+| Check | Result |
+|---|---|
+| `hermes plugins validate` | "server costs: mixar — 2 costed tool(s), spend limit 500 Mixar credits per chat" |
+| Hermes's runtime config for the server | `tool_costs` (`enqueue_generation` 6–250, `create_layered_material` 1–2), `spend_limit` 500, `cost_unit` "Mixar credits" |
+| Three `enqueue_generation` calls through Hermes against a stub server with the same tool names (no credits spent) | The first two ran; the third stopped at Hermes's spend-limit prompt naming the 6–250 range and the chat's 500 total, and was not run when nobody approved it; a free tool still ran |
+
 ### Windows and Linux
 
 | Check | Result |
